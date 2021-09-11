@@ -19,6 +19,11 @@ var board = [
 var end = 0;
 var move = 0;
 
+
+function sleep (time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+}
+
 // TODO: if Submit button is clicked in the form, change the player name and symbol!
 
 function setName() {
@@ -38,7 +43,6 @@ function setName() {
 }
 
 async function onCellClick(cellID) {
-    // sleep
     var id = parseInt(cellID[1]);
     let row = Math.floor(id / 3);
     let col = id % 3;
@@ -66,23 +70,23 @@ async function onCellClick(cellID) {
     }
     if(move > 4 && end != 1)
     {
-        if(checkWin(p))
+            
+            if(checkWin(p))
+            {
+                sleep(1000).then(function(){
+                    alert(p.name + " WON!");
+                    endflag =1;
+                })
+            }
+            //TODO: else Draw situation!!
+        if(move == 9 && !checkWin(p))
         {
-            endflag =1;
+            document.getElementById("Result").style.visibility = "visible";
         }
-        if(endflag)
-        {
-            alert(p.name + " WON!");
-        }
-        //TODO: else Draw situation!!
     }
-    if(move == 9 && !checkWin(p))
-    {
-        document.getElementById("Result").style.visibility = "visible";
-    }
+
     
 }
-
 function checkWin(p)
 {
     for(let i = 0; i < 3; i++)
