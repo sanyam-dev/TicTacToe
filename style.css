@@ -1,0 +1,125 @@
+/* we can center div like this:  */
+html, body{
+    margin: 0px;
+    height: 100%;
+}
+body {
+    padding: 0px;
+    margin: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: -webkit-gradient(linear, left top, right bottom, from(lightblue), to(rgb(245, 202, 209))) fixed;
+
+}
+
+.grid {
+    position: absolute;
+    top: 50%;
+    transform: translate(0%, -50%);
+    height: 330px;
+    width: 330px;
+    margin : auto;
+    /* background-color: orange; */
+    /* border: 1px solid orange; */
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-rows: 33% 33% 33%;
+
+
+}
+
+.cell{
+    border: 1px solid rgb(175, 134, 187);
+    text-align: center;
+    font-family: sans-serif;
+    color: rgb(77, 77, 77);
+    font-size: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+
+#c0,
+#c1,
+#c2 {
+    border-top: none;
+}
+
+#c0,
+#c3,
+#c6 {
+    border-left: none;
+}
+
+#c2,
+#c5,
+#c8 {
+    border-right: none;
+}
+
+#c6,
+#c7,
+#c8 {
+    border-bottom: none;
+}
+
+.cell:hover {
+    opacity: 0.4;
+}
+
+#playerName{
+    position: absolute;
+    top: 10%;
+    margin: auto;
+    width: 300px;
+    height: 50px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border : 1px solid rgb(77, 77, 77);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 25px;
+    color:rgb(77, 77, 77);
+}
+
+.info{
+    width: 50%;
+    /* To get the div in center */
+    position: absolute; 
+    visibility: false;
+    height:  50%;
+    /* border: 2px solid olivedrab; */
+    z-index: 1;
+    background: -webkit-gradient(linear, left top, right top, from(slateblue), to(#c868a3));
+    border-radius: 30px;
+    display: grid;
+    grid-template-columns: [line1] 33% [line2] 66% [line3];
+    grid-template-rows: [line1] 30% [line2] 30%;
+    justify-items:  center;
+    align-items: center;
+    visibility: visible;
+}
+
+#Result
+{
+    visibility: hidden;
+}
+.text{
+    border-radius: 5px;
+}
+
+#btn{
+    grid-column: 2;
+    border : 2px solid rgb(118, 155, 127);
+    padding: 20px 40px 20px 40px ;
+    font-size: 25px;
+    border-radius: 15px;
+}
+#btn:hover{
+    background-color: rgb(118, 155, 127);
+}
+
