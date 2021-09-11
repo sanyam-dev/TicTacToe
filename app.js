@@ -1,5 +1,5 @@
 console.log("Hello");
-
+//https://github.com/sanyam-dev/TicTacToe.git
 class player {
     constructor(name, symbol, bgclr, record ) {
         this.name = name;
@@ -20,11 +20,6 @@ var end = 0;
 var move = 0;
 
 // TODO: if Submit button is clicked in the form, change the player name and symbol!
-
-
-    var e = document.getElementById("btn");
-    console.log(e)
-    e.addEventListener("click", setName());
 
 function setName() {
     var n1 = document.getElementById("p1Name").value;
