@@ -16,6 +16,11 @@ var board = [
     ['-','-','-'],
     ['-','-','-']
 ];
+var boardReset = [
+    ['-', '-', '-'],
+    ['-', '-', '-'],
+    ['-', '-', '-']
+];
 var end = 0;
 var move = 0;
 
@@ -41,13 +46,12 @@ function setName() {
     document.getElementsByClassName("info")[0].style.visibility = "hidden";
 
 }
-
-async function onCellClick(cellID) {
+let endflag = 0;
+function onCellClick(cellID) {
     var id = parseInt(cellID[1]);
     let row = Math.floor(id / 3);
     let col = id % 3;
     let p;
-    let endflag = 0;
     let lstp ;
     if (board[row][col] != '-') {
         console.log("INVALID MOVE!");
@@ -69,50 +73,56 @@ async function onCellClick(cellID) {
         move = move + 1;
     }
     if(move > 4 && end != 1)
-    {
-            
-            if(checkWin(p))
-            {
-                sleep(1000).then(function(){
-                    alert(p.name + " WON!");
-                    endflag =1;
-                })
-            }
-            //TODO: else Draw situation!!
-        if(move == 9 && !checkWin(p))
+    {     
+        if(checkWin(p))
         {
-            document.getElementById("Result").style.visibility = "visible";
+            endflag = 1;
+            
+                // alert(p.name + " WON!");
+                // document.getElementById("Result").style.visibility = "visible";
+                // document.getElementById("message").innerHTML = p.name;
+                // endflag =1;
+            // })
+        }
+            //TODO: else Draw situation!!
+        else if(move == 9 && !checkWin(p))
+        {
+            endflag = 2;
+        }
+        if(endflag != 0)
+        {
+           resultPage(p);
         }
     }
-
-    
 }
+
+//Decides the winner after every move > 5
 function checkWin(p)
 {
     for(let i = 0; i < 3; i++)
     {
-        if(board[i][0] == board[i][1] && board[i][1] == board[i][2] && board[i][1] != '-')    //row checks!
+        if(board[i][1] == p.symbol && board[i][0] == p.symbol && board[i][2] == p.symbol)    //row checks!
         {
             end = 1;
-            console.log(p.name + " WINS!");
+            console.log(p.name + " WINS! in row: " + i);
             return true;
         }
-        else if (board[0][i] == board[1][i] && board[1][i] == board[2][i] && board[1][i] != '-') { //column checks!
-            console.log(p.name + " WINS!");
+        else if (board[1][i] == p.symbol && board[0][i] == p.symbol && board[2][i] == p.symbol) { //column checks!
+            console.log(p.name + " WINS! in col: " + i);
             end = 1;
             return true;
         }
     }
-    if(board[0][0] == board[1][1] && board[1][1] == board[2][2] && board[1][1] != '-')
+    if (board[0][0] == p.symbol && board[1][1] == p.symbol && board[2][2] == p.symbol)
     {
         end = 1;
-        console.log(p.name + " WINS!");
+        console.log(p.name + " WINS! with left-to-right diag ");
         return true;
     }
-    else if(board[2][0] == board[1][1]  && board[1][1] == board[0][2] && board[1][1] != '-')
+    else if (board[0][2] == p.symbol && board[2][0] == p.symbol && board[1][1] == p.symbol)
     {
         end = 1;
-        console.log(p.name + " WINS!");
+        console.log(p.name + " WINS! with right-to-left diag");
         return true;
     }
     else
@@ -121,5 +131,39 @@ function checkWin(p)
     }
 
     //TODO: Add latency to the result so that player move can be seen!
+    //DONE!!!!
 }
 
+function resultPage(p)
+{
+    if(endflag == 1)
+    {
+        document.getElementById("message").innerHTML = p.name + " Won! ";
+        document.getElementById("playerName").innerHTML = p.name + " Won! :D";
+    }
+    else if(endflag == 2)
+    {
+        document.getElementById("message").innerHTML = "its a draw";
+        document.getElementById("playerName").innerHTML = "Draw ://";
+    }
+    sleep(2000).then(document.getElementById("Result").style.visibility = "visible");
+
+}
+//This function Resets Board!!
+function reset()
+{
+    board = boardReset;
+    for(let i = 0; i < player1.record.length; i++)
+    {
+        document.getElementById(player1.record[i]).innerHTML -= player1.symbol;
+        document.getElementById(player1.record[i]).style.backgroundColor -= player1.bgclr;
+    }
+    for (let i = 0; i < player2.record.length; i++) {
+        document.getElementById(player2.record[i]).innerHTML -= player2.symbol;
+        document.getElementById(player2.record[i]).style.backgroundColor -= player2.bgclr;
+    }
+    move = 0;
+    document.getElementsByClassName("info")[0].style.visibility = "visible";
+    document.getElementById("Result").style.visibility = "hidden";
+
+}

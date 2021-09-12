@@ -2,6 +2,9 @@
 html, body{
     margin: 0px;
     height: 100%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 25px;
+    color:rgb(77, 77, 77);
 }
 body {
     padding: 0px;
@@ -81,9 +84,7 @@ body {
     align-items: center;
     justify-content: center;
     border : 1px solid rgb(77, 77, 77);
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: 25px;
-    color:rgb(77, 77, 77);
+
 }
 
 .info{
@@ -94,7 +95,7 @@ body {
     height:  50%;
     /* border: 2px solid olivedrab; */
     z-index: 1;
-    background: -webkit-gradient(linear, left top, right top, from(slateblue), to(#c868a3));
+    background: -webkit-gradient(linear, right bottom, left top, from(slateblue), to(#c868a3));
     border-radius: 30px;
     display: grid;
     grid-template-columns: [line1] 33% [line2] 66% [line3];
@@ -104,22 +105,39 @@ body {
     visibility: visible;
 }
 
-#Result
-{
-    visibility: hidden;
-}
+
 .text{
     border-radius: 5px;
 }
 
-#btn{
+.clickMe{
     grid-column: 2;
-    border : 2px solid rgb(118, 155, 127);
+    border : 1px solid rgb(118, 155, 127);
     padding: 20px 40px 20px 40px ;
     font-size: 25px;
     border-radius: 15px;
 }
-#btn:hover{
+.clickMe:hover{
     background-color: rgb(118, 155, 127);
 }
 
+#Result
+{
+    display : "grid";
+    grid-template-rows: [line1] 13% [line2] 30% [line3] 10% [line4] 25% [line5];
+    grid-template-columns: auto;
+    visibility: hidden;
+}
+#message{
+    grid-row-start: 2;
+    grid-row-end: span 1;
+    grid-column-start: 1;
+    grid-column-end: last-line;
+    color:rgb(134, 224, 157)
+}
+#btn2
+{
+    grid-row-start: 4;
+    grid-column-start: 1;
+    grid-column-end: last-line;
+}
