@@ -165,5 +165,5 @@ function reset()
     move = 0;
     document.getElementsByClassName("info")[0].style.visibility = "visible";
     document.getElementById("Result").style.visibility = "hidden";
-
+    document.getElementById("playerName").innerHTML = "Press Submit to start";
 }
