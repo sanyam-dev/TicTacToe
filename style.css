@@ -23,8 +23,6 @@ body {
     height: 330px;
     width: 330px;
     margin : auto;
-    /* background-color: orange; */
-    /* border: 1px solid orange; */
     display: grid;
     grid-template-columns: 33% 33% 33%;
     grid-template-rows: 33% 33% 33%;
@@ -93,7 +91,6 @@ body {
     position: absolute; 
     visibility: false;
     height:  50%;
-    /* border: 2px solid olivedrab; */
     z-index: 1;
     background: -webkit-gradient(linear, right bottom, left top, from(slateblue), to(#c868a3));
     border-radius: 30px;

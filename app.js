@@ -1,5 +1,8 @@
 console.log("Hello");
 //https://github.com/sanyam-dev/TicTacToe.git
+
+//Player
+//TODO: Choose your own symbol functionality yet to be added!
 class player {
     constructor(name, symbol, bgclr, record ) {
         this.name = name;
@@ -11,42 +14,42 @@ class player {
 
 var player1 = new player("player1", "X", "rgb(0, 204, 255,0.5)");
 var player2 = new player("player2", "O", "rgb(255, 102, 102, 0.5)");
+
+//This will come handy in tracking game progress and wins!
 var board = [
     ['-','-','-'],
     ['-','-','-'],
     ['-','-','-']
 ];
-var boardReset = [
-    ['-', '-', '-'],
-    ['-', '-', '-'],
-    ['-', '-', '-']
-];
+
 var end = 0;
 var move = 0;
-
+let endflag = 0; 
 
 function sleep (time) {
     return new Promise((resolve) => setTimeout(resolve, time));
 }
 
-// TODO: if Submit button is clicked in the form, change the player name and symbol!
-
 function setName() {
     var n1 = document.getElementById("p1Name").value;
     var n2 = document.getElementById("p2Name").value;
-    if(n1 != '')
+    if(n1 != undefined)
     {
         player1.name = n1;
     }
-    if(n2 != '')
+    if(n2 != undefined)
     {
         player2.name = n2;
     }
     //getElementsByClassName gets an array, specify index!!!!
     document.getElementsByClassName("info")[0].style.visibility = "hidden";
-
+    document.getElementById("playerName").innerHTML = player1.name;
+    move = 0;
+    end = 0;
+    endflag = 0;
 }
-let endflag = 0;
+
+//On Each Click!
 function onCellClick(cellID) {
     var id = parseInt(cellID[1]);
     let row = Math.floor(id / 3);
@@ -77,14 +80,8 @@ function onCellClick(cellID) {
         if(checkWin(p))
         {
             endflag = 1;
-            
-                // alert(p.name + " WON!");
-                // document.getElementById("Result").style.visibility = "visible";
-                // document.getElementById("message").innerHTML = p.name;
-                // endflag =1;
-            // })
         }
-            //TODO: else Draw situation!!
+         //TODO: else Draw situation!!
         else if(move == 9 && !checkWin(p))
         {
             endflag = 2;
@@ -134,6 +131,7 @@ function checkWin(p)
     //DONE!!!!
 }
 
+//Triggering The Result Page and feeding values
 function resultPage(p)
 {
     if(endflag == 1)
@@ -152,18 +150,23 @@ function resultPage(p)
 //This function Resets Board!!
 function reset()
 {
-    board = boardReset;
+    for(let i = 0; i < 3; i++)
+    {
+        for(let j = 0; j < 3; j++)
+        {
+            board[i][j] = '-';
+        }
+    }
     for(let i = 0; i < player1.record.length; i++)
     {
-        document.getElementById(player1.record[i]).innerHTML -= player1.symbol;
-        document.getElementById(player1.record[i]).style.backgroundColor -= player1.bgclr;
+        document.getElementById(player1.record[i]).innerHTML = "";
+        document.getElementById(player1.record[i]).style.backgroundColor = "";
     }
     for (let i = 0; i < player2.record.length; i++) {
-        document.getElementById(player2.record[i]).innerHTML -= player2.symbol;
-        document.getElementById(player2.record[i]).style.backgroundColor -= player2.bgclr;
+        document.getElementById(player2.record[i]).innerHTML = "";
+        document.getElementById(player2.record[i]).style.backgroundColor = "" ;
     }
-    move = 0;
     document.getElementsByClassName("info")[0].style.visibility = "visible";
+    document.getElementById("playerName").innerHTML = "Hit Submit to start";
     document.getElementById("Result").style.visibility = "hidden";
-    document.getElementById("playerName").innerHTML = "Press Submit to start";
 }
