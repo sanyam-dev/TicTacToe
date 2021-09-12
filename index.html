@@ -12,14 +12,13 @@
 
 <body>
     <div class="info">
-
         <div id="name"> Enter Name :</div>
         <textarea id="p1Name" class="text" row=1 col=3></textarea>
 
         <div id="name"> Enter Name :</div>
         <textarea id="p2Name" class="text" row=1 col=3></textarea>
 
-        <button id="btn" onclick="setName()">Submit</button>
+        <button class="clickMe" id="btn" onclick="setName()">Submit</button>
     </div>
     <div id='playerName'></div>
     </div>
@@ -35,9 +34,9 @@
         <div class="cell" id="c8" onclick="onCellClick('c8')"></div>
     </div>
     <div class="info" id="Result">
-        IT'S A DRAW
-
+        <div id="message">Won!!</div>
+        <div class="clickMe" id="btn2" onclick="reset()">Play Again!</div>
     </div>
-</body>
 
+</body>
 </html>
