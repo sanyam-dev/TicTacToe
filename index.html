@@ -11,17 +11,30 @@
 </head>
 
 <body>
-    <div class="info">
-        <div id="name"> Enter Name :</div>
-        <textarea id="p1Name" class="text" row=1 col=3></textarea>
 
-        <div id="name"> Enter Name :</div>
+    
+    <div class="info" id="vsCPU">
+        <div class="text1">Who do you wanna play ?</div>
+        <div class="clickMe" id = "cpu" onclick = "cpu()"> CPU </div>
+        <div class="clickMe" id= "player2" onclick = "p2()">Player</div>
+    </div>
+    
+    <div class="info" id = "names">
+        <div id="name1"> Enter Name :</div>
+        <textarea id="p1Name" class="text" row=1 col=3></textarea>
+        <div id="name1"> Symbol :</div>
+        <textarea id="p1Symbol" class="text" row=1 col=1></textarea>
+        <div id="name2"> Enter Name :</div>
         <textarea id="p2Name" class="text" row=1 col=3></textarea>
+        <div id="name1"> Symbol :</div>
+        <textarea id="p2Symbol" class="text" row=1 col=1></textarea>
 
         <button class="clickMe" id="btn" onclick="setName()">Submit</button>
     </div>
-    <div id='playerName'>Press Submit to start</div>
+    <div id='playerName'>
+        Press Submit to start
     </div>
+
     <div class="grid" id="grid">
         <div class="cell" id="c0" onclick="onCellClick('c0')"></div>
         <div class="cell" id="c1" onclick="onCellClick('c1')"></div>
@@ -39,4 +52,5 @@
     </div>
 
 </body>
+
 </html>

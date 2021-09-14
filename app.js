@@ -1,4 +1,11 @@
 console.log("Hello");
+// alert("CPU WORK IN PROGRESS")
+cellList = []
+for(let i = 0; i < 10; i++)
+{
+    var str1 = 'c' + i
+    cellList.push(str1);
+}
 //https://github.com/sanyam-dev/TicTacToe.git
 
 //Player
@@ -26,74 +33,142 @@ var end = 0;
 var move = 0;
 let endflag = 0; 
 
-function sleep (time) {
-    return new Promise((resolve) => setTimeout(resolve, time));
+var aiFlag= 0;
+//for CPU
+function cpu()
+{
+    alert("CPU WORK IN PROGRESS")
+    // console.log("Hey! I'm your opponent, CPU!");
+    // document.getElementById("vsCPU").style.visibility = "hidden";
+    // document.getElementById("name1").style.visibility = "hidden";
+    // document.getElementById("p1Name").style.visibility = "hidden";
+    // player1.name = "CPU";
+    // aiFlag = 1;
+    // //impleementing a basic AI here!!
+    // AImoves();
 }
 
-function setName() {
+function AImoves()
+{
+    //player1 is AI here !!!!
+    // (playerTurn(move) == player1) ? currentPlayer = player1 : currentPlayer = player2;
+
+    if(playerTurn(move) == player1)
+    {
+        //How to determine move by cpu
+        var cellIndex = Math.floor(Math.random() * cellList.length);     //will change minimax here later
+        console.log("cell index: " + cellIndex);
+        onCellClick(cellList[cellIndex]);
+    }
+    else
+    {
+        console.log("not my chance");
+    }
+    
+}
+//For Multiplayer games
+function p2()
+{
+    var e = document.getElementById("player2");
+    var e1 = document.getElementById("vsCPU");
+    e1.style.visibility = "hidden";
+}
+
+//This functions sets up player names!
+function setName(){
     var n1 = document.getElementById("p1Name").value;
     var n2 = document.getElementById("p2Name").value;
-    if(n1 != undefined)
+    var s1 = document.getElementById("p1Symbol").value;
+    var s2 = document.getElementById("p2Symbol").value;
+    if (n1 != undefined && player1.name != "CPU")
     {
         player1.name = n1;
+        if (s1 != undefined)
+        {
+            player1.symbol = s1;
+        }
     }
-    if(n2 != undefined)
+    if(n2 != undefined )
     {
         player2.name = n2;
+        if (s2 != undefined) {
+            player2.symbol = s2;
+        }
     }
-    //getElementsByClassName gets an array, specify index!!!!
-    document.getElementsByClassName("info")[0].style.visibility = "hidden";
+    // document.getElementsByClassName("info")[0].style.visibility = "hidden";
+    document.getElementById("names").style.visibility = "hidden";
     document.getElementById("playerName").innerHTML = player1.name;
     move = 0;
     end = 0;
     endflag = 0;
 }
 
-//On Each Click!
-function onCellClick(cellID) {
-    var id = parseInt(cellID[1]);
-    let row = Math.floor(id / 3);
-    let col = id % 3;
-    let p;
-    let lstp ;
-    if (board[row][col] != '-') {
-        console.log("INVALID MOVE!");
-    }
-    else {
-        if (move % 2 == 0) {
-            p = player1;
-            lstp = player2;
-        }
-        else {
-            p = player2;
-            lstp = player1;
-        }
-        document.getElementById(cellID).innerHTML += p.symbol;
-        document.getElementById(cellID).style.backgroundColor = p.bgclr;
-        document.getElementById("playerName").innerHTML = lstp.name;
-        p.record.push(cellID);
-        board[row][col] = p.symbol;
-        move = move + 1;
-    }
-    if(move > 4 && end != 1)
-    {     
-        if(checkWin(p))
-        {
-            endflag = 1;
-        }
-         //TODO: else Draw situation!!
-        else if(move == 9 && !checkWin(p))
-        {
-            endflag = 2;
-        }
-        if(endflag != 0)
-        {
-           resultPage(p);
-        }
+//specify the turn of player
+function playerTurn(move){
+    if(move%2 == 0){return player1;}
+    else{return player2;}  
+}
+
+// returns the info of the cell clicked and initiates the task of processing
+var cellID, row, col;
+function onCellClick(cellNumber)
+{
+    cellID = parseInt(cellNumber[1]);
+    processClick(cellID);
+    cellList.splice(cellID, 1);
+    console.log("move number:  " + move);
+    if(aiFlag == 1 && move%2 == 0)
+    {
+        againstAI();
     }
 }
 
-//Decides the winner after every move > 5
+//defines what to do when a cell in the grid is clicked
+function processClick(cellID)
+{
+    var currentPlayer = playerTurn(move);
+    row = parseInt(cellID / 3);
+    col = cellID % 3;
+    var flagwin =0;
+
+    move = move + 1;
+    if(board[row][col] == '-')
+    {
+        visualChange(currentPlayer);
+        board[row][col] = currentPlayer.symbol;
+        if(checkWin(currentPlayer))
+        {
+            winPage(currentPlayer);
+            flagwin = 1;
+        }
+        if(flagwin == 0 && move == 9)
+        {
+            console.log("its a draw");
+            drawPage();
+        }
+        console.log(flagwin); 
+    }
+}
+
+//defines what needs to be changed visually when a cell is clicked
+function visualChange(p)
+{
+    var s = 'c' + cellID;
+    document.getElementById(s).innerHTML = p.symbol;
+    document.getElementById(s).style.backgroundColor = p.bgclr;
+    p.record.push(cellID);
+    if(p == player1)
+    {
+        document.getElementById("playerName").innerHTML = player2.name;
+    }
+    else
+    {
+        document.getElementById("playerName").innerHTML = player1.name;
+    }
+    
+}
+
+//Decides the winner after every move
 function checkWin(p)
 {
     for(let i = 0; i < 3; i++)
@@ -131,23 +206,23 @@ function checkWin(p)
     //DONE!!!!
 }
 
-//Triggering The Result Page and feeding values
-function resultPage(p)
+//Triggering the win Page and feeding values
+function winPage(p)
 {
-    if(endflag == 1)
-    {
-        document.getElementById("message").innerHTML = p.name + " Won! ";
-        document.getElementById("playerName").innerHTML = p.name + " Won! :D";
-    }
-    else if(endflag == 2)
-    {
-        document.getElementById("message").innerHTML = "its a draw";
-        document.getElementById("playerName").innerHTML = "Draw ://";
-    }
-    sleep(2000).then(document.getElementById("Result").style.visibility = "visible");
-
+    document.getElementById("message").innerHTML = p.name + " Won! ";
+    document.getElementById("playerName").innerHTML = p.name + " Won! :D";
+    document.getElementById("Result").style.visibility = "visible";
 }
-//This function Resets Board!!
+
+//Triggers the draw page
+function drawPage()
+{
+    document.getElementById("message").innerHTML = "its a draw";
+    document.getElementById("playerName").innerHTML = "Draw ://";
+    document.getElementById("Result").style.visibility = "visible";
+}
+
+//This function Resets Board!! (and also clears the previous data!)
 function reset()
 {
     for(let i = 0; i < 3; i++)
@@ -157,16 +232,19 @@ function reset()
             board[i][j] = '-';
         }
     }
-    for(let i = 0; i < player1.record.length; i++)
+    endflag = 0;
+    move = 0;
+    for(var i = 0; i < 9; i++)
     {
-        document.getElementById(player1.record[i]).innerHTML = "";
-        document.getElementById(player1.record[i]).style.backgroundColor = "";
+        var s = 'c' + i
+        document.getElementById(s).innerHTML = "";
+        document.getElementById(s).style.backgroundColor = "";
+
     }
-    for (let i = 0; i < player2.record.length; i++) {
-        document.getElementById(player2.record[i]).innerHTML = "";
-        document.getElementById(player2.record[i]).style.backgroundColor = "" ;
-    }
-    document.getElementsByClassName("info")[0].style.visibility = "visible";
+    document.getElementById("names").style.visibility = "visible";
     document.getElementById("playerName").innerHTML = "Hit Submit to start";
     document.getElementById("Result").style.visibility = "hidden";
+    document.getElementById("vsCPU").style.visibility = "hidden";
+    
 }
+
